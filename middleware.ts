@@ -7,10 +7,15 @@ export const middleware = async (request: NextRequest) => {
 
   const token = request.cookies.get("accessToken")?.value || "";
 
+
   const decryptedToken = await decryptToken(token);
+
+
 
   if (decryptedToken) {
     const { id, email, role } = decryptedToken;
+
+    console.log({ id, email, role });
 
     if (isPublicPath && id !== null) {
       return NextResponse.redirect(new URL("/", request.nextUrl));
@@ -27,5 +32,5 @@ export const middleware = async (request: NextRequest) => {
 };
 
 export const config = {
-  matcher: ["/", "/login", "/sign-up", "/dashboard"],
+    matcher: ["/", "/login", "/sign-up", "/dashboard/:path*"],
 };
