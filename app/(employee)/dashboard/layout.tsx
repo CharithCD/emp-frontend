@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Logoutbutton from "@/components/logout-button";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -100,6 +101,7 @@ export default function RootLayout({
             </Sheet>
             <div className="w-full flex-1"></div>
             <Logoutbutton />
+            <ModeToggle />
           </header>
           {children}
         </div>
