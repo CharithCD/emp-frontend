@@ -54,6 +54,13 @@ export default function RootLayout({
                   <Bell className="h-4 w-4" />
                   Review Leaves
                 </Link>
+                <Link
+                  href="/admin-panel/employees"
+                  className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                >
+                  <Building className="h-4 w-4" />
+                  Employee
+                </Link>
               </nav>
             </div>
             <div className="mt-auto p-4"></div>
@@ -94,6 +101,13 @@ export default function RootLayout({
                   >
                     <Bell className="h-4 w-4" />
                     Review Leaves
+                  </Link>
+                  <Link
+                    href="/admin-panel/employees"
+                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                  >
+                    <Building className="h-4 w-4" />
+                    Employee
                   </Link>
                 </nav>
                 <div className="mt-auto"></div>
