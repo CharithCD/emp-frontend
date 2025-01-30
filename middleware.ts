@@ -17,6 +17,16 @@ export const middleware = async (request: NextRequest) => {
 
     console.log({ id, email, role });
 
+    //only if the user role is admin
+    if (role === "admin" && !path.startsWith("/admin-panel")) {
+      return NextResponse.redirect(new URL("/admin-panel", request.nextUrl));
+    }
+
+
+    if (role === "user" && path.startsWith("/admin-panel")) {
+      return NextResponse.redirect(new URL("/login", request.nextUrl));
+    }
+
     if (isPublicPath && id !== null) {
       return NextResponse.redirect(new URL("/", request.nextUrl));
     }
@@ -32,5 +42,5 @@ export const middleware = async (request: NextRequest) => {
 };
 
 export const config = {
-    matcher: ["/", "/login", "/sign-up", "/dashboard/:path*"],
+    matcher: ["/", "/login", "/sign-up", "/dashboard/:path*", "/admin-panel/:path*"],
 };
