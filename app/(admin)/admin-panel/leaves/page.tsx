@@ -112,11 +112,19 @@ export default function Page() {
         description: "Leave request has been updated successfully",
       });
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Update failed",
-        description: "Could not update leave status. Please try again.",
-      });
+      if (axios.isAxiosError(error)) {
+        toast({
+          variant: "destructive",
+          title: "Error updating leave status",
+          description: error.response?.data.message,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Error updating leave status",
+          description: "Could not update leave status. Please try again.",
+        });
+      }
     } finally {
       setUpdatingId(null);
     }

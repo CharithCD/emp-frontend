@@ -69,7 +69,9 @@ const Page = (): JSX.Element => {
         toast({
           description: "Request submitted successfully",
         });
-        router.refresh();
+        //refresh the page and remove the data from the form
+        form.reset();
+        
       } else {
         toast({
           variant: "destructive",
