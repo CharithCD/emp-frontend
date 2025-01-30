@@ -1,35 +1,31 @@
-// const cookie = (await cookies()).get("session")?.value;
-// const session = await decrypt(cookie);
-
-
 import { NextRequest, NextResponse } from "next/server";
 import { decryptToken } from "./lib/decryptToken";
 
-export const middleware = (request: NextRequest) => {
-    const path = request.nextUrl.pathname;
-    const isPublicPath = path === "/login" || path === "/sign-up";
+export const middleware = async (request: NextRequest) => {
+  const path = request.nextUrl.pathname;
+  const isPublicPath = path === "/login" || path === "/sign-up";
 
-    const token = request.cookies.get("accessToken")?.value || "";
-    const userid = decryptToken(token);
+  const token = request.cookies.get("accessToken")?.value || "";
 
-    if (isPublicPath && token) {
-        return NextResponse.redirect(new URL("/", request.nextUrl));
+  const decryptedToken = await decryptToken(token);
+
+  if (decryptedToken) {
+    const { id, email, role } = decryptedToken;
+
+    if (isPublicPath && id !== null) {
+      return NextResponse.redirect(new URL("/", request.nextUrl));
     }
-    
-    if (!isPublicPath && !userid) {
-        return NextResponse.redirect(new URL("/login", request.nextUrl)); 
-    }
 
-}
+    if (!isPublicPath && id === null) {
+      return NextResponse.redirect(new URL("/login", request.nextUrl));
+    }
+  } else {
+    if (!isPublicPath) {
+      return NextResponse.redirect(new URL("/login", request.nextUrl));
+    }
+  }
+};
 
 export const config = {
-    matcher:[
-        "/",
-        "/profile/:path*",
-        "/login",
-        "/signup",
-    ]
-}
-
-
-
+  matcher: ["/", "/login", "/sign-up", "/dashboard"],
+};
