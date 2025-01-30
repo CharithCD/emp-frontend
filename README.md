@@ -66,3 +66,11 @@ leave-management/
 └── README.md        # Project documentation
 ```
 
+## Employee Login Credentials
+- **Employee:**
+  - Email: test@gmail.com
+  - Password: 12345678
+- **Admin:**
+  - Email: admin@gmail.com
+  - Password: 12345678
+
