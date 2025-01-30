@@ -27,16 +27,16 @@ import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-export const usernameValidation = z
-  .string()
-  .min(3, { message: "Username must be at least 3 characters long" })
-  .max(20, { message: "Username must be at most 20 characters long" })
-  .regex(/^[a-zA-Z0-9_]*$/, {
-    message: "Username must only contain letters, numbers, and underscores",
-  });
+// export const usernameValidation = z
+//   .string()
+//   .min(3, { message: "Username must be at least 3 characters long" })
+//   .max(20, { message: "Username must be at most 20 characters long" })
+//   .regex(/^[a-zA-Z0-9_]*$/, {
+//     message: "Username must only contain letters, numbers, and underscores",
+//   });
 
 const SignUpFormSchema = z.object({
-  username: usernameValidation,
+  fullName: z.string().min(3, "Name must be at least 3 characters"),
   email: z.string().email(),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
@@ -65,7 +65,7 @@ export function SignUpForm({
   const form = useForm<z.infer<typeof SignUpFormSchema>>({
     resolver: zodResolver(SignUpFormSchema),
     defaultValues: {
-      username: "",
+      fullName: "",
       email: "",
       password: "",
     },
@@ -107,12 +107,12 @@ export function SignUpForm({
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
-                name="username"
+                name="fullName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>Full Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="username" {...field} />
+                      <Input placeholder="John Doe" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
